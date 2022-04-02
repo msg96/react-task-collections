@@ -19,6 +19,6 @@ export const Auth = getAuth(app);
 export const DataBase = getFirestore(app);
 
 export const TableNames = {
-  categories: "categories",
-  tasks: "tasks",
+  categories: import.meta.env.NF_CATEGORIES,
+  tasks: import.meta.env.NF_TASKS,
 };
