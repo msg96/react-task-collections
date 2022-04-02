@@ -1,0 +1,12 @@
+<svg width="540" height="192.35" version="1.1" viewBox="0 0 142.87 50.892" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient38867" x1="27.127" x2="100.73" y1="64.917" y2="64.917" gradientTransform="matrix(.38393 0 0 .38393 .66041 .39017)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#1e0e26" stop-opacity=".96078" offset="0"/>
+  </linearGradient>
+ </defs>
+ <g transform="translate(.13229 .13229)" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="25.314" cy="25.314" r="25.395" fill="#1b1917" fill-opacity=".096033" stroke="#1c1817" stroke-opacity=".1" stroke-width=".10158" style="paint-order:markers stroke fill"/>
+  <path d="m39.08 43.368-8.3547-5.4673-14.61-22.358v22.358l-10.337 5.5466 5.5507-36.188 7.5618 4.2364 15.453 23.713-0.0793-23.713 10.585-4.3156z" fill="#662096" stroke="url(#linearGradient38867)" stroke-width="1.0158" style="paint-order:markers stroke fill"/>
+  <text x="47.186935" y="34.234783" fill="#662096" font-family="sans-serif" font-size="25.446px" stroke="#000000" stroke-width=".76338" style="line-height:1.25;paint-order:markers stroke fill" xml:space="preserve"><tspan x="47.186935" y="34.234783" fill="#662096" font-family="Roboto" font-size="25.446px" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".76338" style="paint-order:markers stroke fill">ewForce</tspan></text>
+ </g>
+</svg>
