@@ -18,7 +18,6 @@ export const EditTaskModal = ({ data, exithandle }) => {
   const [busy, setBusy] = useState(null);
 
   useEffect(() => {
-    setBusy(true);
     window.setTimeout(() => {
       setMessage(null);
       setBusy(null);
@@ -36,7 +35,7 @@ export const EditTaskModal = ({ data, exithandle }) => {
     exithandle(false);
   }
 
-  async function UpdateFunc(e) {
+  function UpdateFunc(e) {
     if (e.target !== e.currentTarget) {
       return;
     }
@@ -59,19 +58,20 @@ export const EditTaskModal = ({ data, exithandle }) => {
       where("categoryid", "==", data.data.categoryid)
     );
 
-    const checkedDocks = await getDocs(Checker);
-    if (checkedDocks.empty) {
-      const curDoc = doc(DataBase, TableNames.tasks, data.id);
-      const UpdatedDoc = {
-        name: inputText,
-      };
-      updateDoc(curDoc, UpdatedDoc);
-      setBusy(null);
-      exithandle(false);
-    } else {
-      handledMessage("Task já existente");
-      setBusy(null);
-    }
+    getDocs(Checker).then((checkedDocks) => {
+      if (checkedDocks.empty) {
+        const curDoc = doc(DataBase, TableNames.tasks, data.id);
+        const UpdatedDoc = {
+          name: inputText,
+        };
+        updateDoc(curDoc, UpdatedDoc);
+        setBusy(null);
+        exithandle(false);
+      } else {
+        handledMessage("Task já existente");
+        setBusy(null);
+      }
+    });
   }
 
   return (

@@ -19,16 +19,21 @@ export const NewTaskModal = ({ categoryid, exithandle }) => {
   const [inputText, setInputText] = useState("");
   const [busy, setBusy] = useState(null);
 
+  function handledMessage(message) {
+    setMessage(message);
+  }
+
   useEffect(() => {
     window.setTimeout(() => {
       setMessage(null);
       setBusy(null);
     }, [3000]);
-  }, [message]);
 
-  function handledMessage(message) {
-    setMessage(message);
-  }
+    return () => {
+      setBusy(null);
+      setMessage(null);
+    };
+  }, [message]);
 
   function ExitFunc(e) {
     if (e.target !== e.currentTarget) {
@@ -37,17 +42,15 @@ export const NewTaskModal = ({ categoryid, exithandle }) => {
     exithandle(false);
   }
 
-  async function CreateFunc(e) {
+  function CreateFunc(e) {
     if (e.target !== e.currentTarget) {
       return;
     }
-    setBusy(true);
     if (inputText === "") {
       handledMessage("Defina um nome de pelomenos 1 caracter para sua Task!.");
-      setBusy(null);
       return;
     }
-
+    setBusy(true);
     const Checker = query(
       collection(DataBase, TableNames.tasks),
       where("name", "==", inputText),
@@ -55,23 +58,24 @@ export const NewTaskModal = ({ categoryid, exithandle }) => {
       where("userid", "==", myProvider.Auth.User.uid)
     );
 
-    const checkedDocks = await getDocs(Checker);
-    if (checkedDocks.empty) {
-      const OurDB = doc(collection(DataBase, TableNames.tasks));
-      const NewCategory = {
-        categoryid: categoryid,
-        name: inputText,
-        userid: myProvider.Auth.User.uid,
-        done: false,
-        timestamp: serverTimestamp(),
-      };
-      setDoc(OurDB, NewCategory);
-      setBusy(null);
-      exithandle(false);
-    } else {
-      handledMessage("Task já existente");
-      setBusy(null);
-    }
+    getDocs(Checker).then((checkedDocks) => {
+      if (checkedDocks.empty) {
+        const OurDB = doc(collection(DataBase, TableNames.tasks));
+        const NewCategory = {
+          categoryid: categoryid,
+          name: inputText,
+          userid: myProvider.Auth.User.uid,
+          done: false,
+          timestamp: serverTimestamp(),
+        };
+        setDoc(OurDB, NewCategory);
+        setBusy(null);
+        exithandle(false);
+      } else {
+        handledMessage("Task já existente");
+        setBusy(null);
+      }
+    });
   }
 
   return (

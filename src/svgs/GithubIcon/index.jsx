@@ -2,7 +2,7 @@ export const GithubIcon = (props) => {
   return (
     <svg id={props.id} className={props.className} viewBox="0 0 48 48">
       <linearGradient
-        id="rL2wppHyxHVbobwndsT6Ca"
+        id="GithubIcon_rL2wppHyxHVbobwndsT6Ca"
         x1="4"
         x2="44"
         y1="23.508"
@@ -13,7 +13,7 @@ export const GithubIcon = (props) => {
         <stop offset="1" stopColor="#DDD" />
       </linearGradient>
       <path
-        fill="url(#rL2wppHyxHVbobwndsT6Ca)"
+        fill="url(#GithubIcon_rL2wppHyxHVbobwndsT6Ca)"
         d="M24,4C12.954,4,4,12.954,4,24c0,8.887,5.801,16.411,13.82,19.016h12.36 C38.199,40.411,44,32.887,44,24C44,12.954,35.046,4,24,4z"
       />
       <path

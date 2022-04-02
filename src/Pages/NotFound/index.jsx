@@ -1,6 +1,29 @@
 import styled from "styled-components";
 import { LogoDisplay, Link } from "@/Components";
 
+export const NotFound = ({ name, type }) => {
+  return (
+    <Container>
+      <Guide>
+        <Logo>
+          <LogoDisplay size="200px" />
+        </Logo>
+        <Title>
+          {!type && "Página"}
+          {type && type} não encontrada
+        </Title>
+        <Text>
+          {name && name}
+          {!name && window.location.pathname.slice(1)}
+        </Text>
+        <Link to={"/"} replace>
+          Home
+        </Link>
+      </Guide>
+    </Container>
+  );
+};
+
 const Container = styled.div`
   position: absolute;
   left: 0;
@@ -50,26 +73,3 @@ const Text = styled.div`
   border-radius: 15px;
   background-color: ${(props) => props.theme.backgrounds.logo.transparent};
 `;
-
-export const NotFound = ({ name, type }) => {
-  return (
-    <Container>
-      <Guide>
-        <Logo>
-          <LogoDisplay size="200px" />
-        </Logo>
-        <Title>
-          {!type && "Página"}
-          {type && type} não encontrada
-        </Title>
-        <Text>
-          {name && name}
-          {!name && window.location.pathname.slice(1)}
-        </Text>
-        <Link to={"/"} replace>
-          Home
-        </Link>
-      </Guide>
-    </Container>
-  );
-};

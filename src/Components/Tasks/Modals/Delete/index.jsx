@@ -1,11 +1,9 @@
 import { deleteDoc, doc } from "firebase/firestore";
 import { DataBase, TableNames } from "@/Configs/Firebase-config";
-import { useProvider } from "@/Configs/Provider";
 import { useState } from "react";
 import styled from "styled-components";
 
 export const DeleteTaskModal = ({ data, exithandle }) => {
-  const myProvider = useProvider();
   const [busy, setBusy] = useState(null);
 
   function ExitFunc(e) {
@@ -15,15 +13,20 @@ export const DeleteTaskModal = ({ data, exithandle }) => {
     exithandle(false);
   }
 
-  async function DeleteFunc(e) {
+  function DeleteFunc(e) {
     if (e.target !== e.currentTarget) {
       return;
     }
     setBusy(true);
-    deleteDoc(doc(DataBase, TableNames.tasks, data.id)).then(() => {
-      setBusy(null);
-      exithandle(false);
-    });
+    deleteDoc(doc(DataBase, TableNames.tasks, data.id))
+      .then(() => {
+        setBusy(null);
+        exithandle(false);
+      })
+      .catch(() => {
+        setBusy(null);
+        exithandle(false);
+      });
   }
 
   return (

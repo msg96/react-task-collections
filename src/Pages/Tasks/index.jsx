@@ -31,10 +31,9 @@ export const Tasks = (props) => {
   const [deleteTask, setDeleteTask] = useState(null);
   const [newTask, setNewTask] = useState(null);
 
-  let categoryObserver;
-  let tasksObserver;
   useEffect(() => {
-    categoryObserver = onSnapshot(
+    var unsubscribeTask;
+    const unsubscribeCategory = onSnapshot(
       doc(DataBase, TableNames.categories, CategoryID),
       (doc) => {
         if (doc.exists()) {
@@ -48,7 +47,7 @@ export const Tasks = (props) => {
             where("categoryid", "==", CategoryID),
             orderBy("timestamp", "desc")
           );
-          tasksObserver = onSnapshot(receivedTasks, (querySnapshot) => {
+          unsubscribeTask = onSnapshot(receivedTasks, (querySnapshot) => {
             const curTasks = [];
             querySnapshot.forEach((doc) => {
               curTasks.push({ id: doc.id, data: doc.data() });
@@ -62,14 +61,12 @@ export const Tasks = (props) => {
         }
       }
     );
-  }, []);
 
-  useEffect(() => {
-    if (window.location.pathname !== `/categorias/${CategoryID}`) {
-      categoryObserver();
-      tasksObserver();
-    }
-  }, [window.location.pathname]);
+    return () => {
+      unsubscribeCategory();
+      unsubscribeTask();
+    };
+  }, []);
 
   function HandleEditModal(doc) {
     setEditTask(doc);

@@ -1,4 +1,4 @@
-import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -6,28 +6,20 @@ import { DataBase, TableNames } from "@/Configs/Firebase-config";
 
 export const CategoryItem = ({ item, editmodalRef, deleteModalRef }) => {
   const [CategoryData, setCategoryData] = useState(item || undefined);
-  const [done, setDone] = useState(null);
   const NavigateMe = useNavigate();
 
-  let docObserver;
   useEffect(() => {
-    docObserver = onSnapshot(
+    const unsubscribe = onSnapshot(
       doc(DataBase, TableNames.categories, item.id),
       (doc) => {
         setCategoryData({ id: doc.id, data: doc.data() });
       }
     );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
-
-  useEffect(() => {
-    if (window.location.pathname !== "/categorias") {
-      docObserver();
-    }
-  }, [window.location.pathname]);
-
-  useEffect(() => {
-    setDone(CategoryData.data.done);
-  }, [CategoryData]);
 
   function NavigateToCategorie(e) {
     if (e.target !== e.currentTarget) {

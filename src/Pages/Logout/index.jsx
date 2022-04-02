@@ -1,12 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { Logout as sair } from "@/Configs/Auth";
+import { Auth } from "@/Configs/Firebase-config";
+
 export const Logout = (props) => {
-  sair()
+  Auth.signOut()
     .then((result) => {
       return <Navigate to="/Login" replace />;
     })
     .catch((error) => {
-      window.history.back();
+      return <></>;
     });
   return <></>;
 };

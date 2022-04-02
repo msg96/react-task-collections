@@ -21,6 +21,7 @@ import { Auth } from "@/Configs/Firebase-config";
 import { Base, Spinner } from "@/Pages";
 
 import { ThemeProvider } from "styled-components";
+import { DarkTheme, LightTheme } from "../Themes";
 
 const CurrentProvider = createContext();
 
@@ -31,41 +32,61 @@ export function useProvider() {
 export const Provider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [pending, setPending] = useState(true);
-
+  const [currentTheme, setCurrentTheme] = useState(PrefersTheme);
+  const [temas, setTemas] = useState(Themes);
   //Try check if user is logged in
-  useEffect(() => {
+  // useEffect(() => {
+  //   Auth.onAuthStateChanged((authenticatedUser) => {
+  //     setUser(authenticatedUser);
+  //     setPending(false);
+  //   });
+  // }, []);
+
+  const Checker = useCallback(() => {
     Auth.onAuthStateChanged((authenticatedUser) => {
       setUser(authenticatedUser);
       setPending(false);
     });
-  }, []);
+  }, [Auth.currentUser]);
 
-  const [currentTheme, setCurrentTheme] = useState(PrefersTheme);
+  useEffect(() => {
+    Checker();
+  }, [Checker]);
 
   const ToggleThemeFunction = useCallback(() => {
-    setCurrentTheme(currentTheme === Themes.dark ? Themes.light : Themes.dark);
+    setCurrentTheme(currentTheme === temas.dark ? temas.light : temas.dark);
   }, [currentTheme]);
+
+  useEffect(() => {
+    setTemas(Themes);
+  }, [DarkTheme, LightTheme]);
 
   useEffect(() => {
     storagePrefersThemeSave(currentTheme);
   }, [currentTheme]);
 
-  const ParammetersProvided = {
-    Auth: {
-      User: user,
-    },
-    Theme: {
-      isDarkMode: themeInterpreter(currentTheme),
-      Toggle: ToggleThemeFunction,
-    },
-  };
   return (
     <BrowserRouter>
-      <CurrentProvider.Provider value={ParammetersProvided}>
+      <CurrentProvider.Provider
+        value={{
+          Auth: {
+            Pending: pending,
+            User: user,
+          },
+          Theme: {
+            isDarkMode: themeInterpreter(currentTheme),
+            Toggle: ToggleThemeFunction,
+          },
+        }}
+      >
         <ThemeProvider theme={currentTheme}>
           <GlobalTheme />
           {!pending && children}
-          {pending && <Base><Spinner /></Base>}
+          {pending && (
+            <Base auth={user}>
+              <Spinner />
+            </Base>
+          )}
         </ThemeProvider>
       </CurrentProvider.Provider>
     </BrowserRouter>

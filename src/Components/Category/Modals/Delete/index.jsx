@@ -1,11 +1,9 @@
 import { deleteDoc, doc } from "firebase/firestore";
 import { DataBase, TableNames } from "@/Configs/Firebase-config";
-import { useProvider } from "@/Configs/Provider";
 import { useState } from "react";
 import styled from "styled-components";
 
 export const DeleteCategoryModal = ({ data, exithandle }) => {
-  const myProvider = useProvider();
   const [busy, setBusy] = useState(null);
 
   function ExitFunc(e) {

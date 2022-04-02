@@ -1,4 +1,5 @@
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, splitVendorChunkPlugin } from "vite";
+
 import react from "@vitejs/plugin-react";
 const path = require("path");
 
@@ -11,7 +12,24 @@ export default ({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
-    plugins: [react()],
+    plugins: [react(), splitVendorChunkPlugin()],
+    build: {
+      chunkSizeWarningLimit: 1500,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              return id
+                .toString()
+                .split("node_modules/")[1]
+                .split("/")[0]
+                .toString();
+            }
+          },
+        },
+      },
+    },
+
     envDir: "./",
     envPrefix: "NF_",
     server: {

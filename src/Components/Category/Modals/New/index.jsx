@@ -23,6 +23,11 @@ export const NewCategoryModal = ({ exithandle }) => {
       setMessage(null);
       setBusy(null);
     }, [3000]);
+
+    return () => {
+      setMessage(null);
+      setBusy(null);
+    };
   }, [message]);
 
   function handledMessage(message) {

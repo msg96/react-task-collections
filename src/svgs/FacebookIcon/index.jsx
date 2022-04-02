@@ -2,7 +2,7 @@ export const FacebookIcon = (props) => {
   return (
     <svg id={props.id} className={props.className} viewBox="0 0 48 48">
       <linearGradient
-        id="Ld6sqrtcxMyckEl6xeDdMa"
+        id="FacebookIcon_Ld6sqrtcxMyckEl6xeDdMa"
         x1="9.993"
         x2="40.615"
         y1="9.993"
@@ -13,7 +13,7 @@ export const FacebookIcon = (props) => {
         <stop offset="1" stopColor="#007ad9" />
       </linearGradient>
       <path
-        fill="url(#Ld6sqrtcxMyckEl6xeDdMa)"
+        fill="url(#FacebookIcon_Ld6sqrtcxMyckEl6xeDdMa)"
         d="M24,4C12.954,4,4,12.954,4,24s8.954,20,20,20s20-8.954,20-20S35.046,4,24,4z"
       />
       <path

@@ -4,7 +4,6 @@ import { LightTheme } from "./Light";
 export const Themes = {
   dark: DarkTheme,
   light: LightTheme,
-  // light: DarkTheme,
 };
 
 function systemPrefersTheme() {

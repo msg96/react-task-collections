@@ -21,10 +21,8 @@ export const Categorias = (props) => {
   const [editcategory, setEditCategory] = useState(null);
   const [deletecategory, setDeleteCategory] = useState(null);
   const [newcategory, setNewCategory] = useState(null);
-
   const [categories, setCategories] = useState([]);
 
-  let unsubscribe;
   useEffect(() => {
     const table = collection(DataBase, TableNames.categories);
     const receivedCategorie = query(
@@ -32,20 +30,18 @@ export const Categorias = (props) => {
       where("userid", "==", myProvider.Auth.User.uid),
       orderBy("timestamp", "desc")
     );
-    unsubscribe = onSnapshot(receivedCategorie, (querySnapshot) => {
+    const unsubscribe = onSnapshot(receivedCategorie, (querySnapshot) => {
       const curCategories = [];
       querySnapshot.forEach((doc) => {
         curCategories.push({ id: doc.id, data: doc.data() });
       });
       setCategories(curCategories);
     });
-  }, []);
 
-  useEffect(() => {
-    if (window.location.pathname !== "/categorias") {
+    return () => {
       unsubscribe();
-    }
-  }, [window.location.pathname]);
+    };
+  }, []);
 
   function HandleEditModal(doc) {
     setEditCategory(doc);

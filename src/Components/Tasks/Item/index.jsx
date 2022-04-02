@@ -1,4 +1,4 @@
-import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { DataBase, TableNames } from "@/Configs/Firebase-config";
@@ -7,30 +7,27 @@ export const TasksItem = ({ item, editmodalRef, deleteModalRef }) => {
   const [TaskData, setTaskData] = useState(item || undefined);
   const [done, setDone] = useState(null);
 
-  let docObserver;
   useEffect(() => {
-    docObserver = onSnapshot(
+    const unsubscribe = onSnapshot(
       doc(DataBase, TableNames.tasks, item.id),
       (doc) => {
-        setTaskData({ id: doc.id, data: doc.data() });
+        if (doc.exists()) {
+          setTaskData({ id: doc.id, data: doc.data() });
+          setDone(doc.data().done);
+        }
       }
     );
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
-
-  useEffect(() => {
-    if (window.location.pathname !== `/categorias/${item.data.categoryid}`) {
-      docObserver();
-    }
-  }, [window.location.pathname]);
-
-  useEffect(() => {
-    setDone(TaskData.data.done);
-  }, [TaskData]);
 
   const updateStats = (e) => {
     if (e.target !== e.currentTarget) {
       return;
     }
+
     const curDoc = doc(DataBase, TableNames.tasks, item.id);
 
     const UpdatedDoc = {

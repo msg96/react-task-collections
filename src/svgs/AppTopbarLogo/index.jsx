@@ -1,8 +1,14 @@
 export const AppTopbarLogo = (props) => {
   return (
-    <svg width="56.5" height="20" viewBox="0 0 14.949 5.2917">
+    <svg
+      id={props.id}
+      className={props.className}
+      width="56.5"
+      height="20"
+      viewBox="0 0 14.949 5.2917"
+    >
       <linearGradient
-        id="linearGradient38867"
+        id="AppTopbarLogo_linearGradient38867"
         x1="27.127"
         x2="100.73"
         y1="64.917"
@@ -32,7 +38,7 @@ export const AppTopbarLogo = (props) => {
         <path
           d="m3.945 4.3908-0.86871-0.56848-1.5191-2.3248v2.3248l-1.0748 0.57672 0.57715-3.7628 0.78626 0.44049 1.6067 2.4657-0.008245-2.4657 1.1006-0.44873z"
           fill="#662096"
-          stroke="url(#linearGradient38867)"
+          stroke="url(#AppTopbarLogo_linearGradient38867)"
           strokeWidth=".10562"
           style={{ paintOrder: "markers stroke fill" }}
         />

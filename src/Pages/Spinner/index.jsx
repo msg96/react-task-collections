@@ -2,13 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { LoadSpinner } from "@/Components";
 
-const Content = styled.div`
-  transition: all 250ms ease-in;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Spinner = ({ clean }) => {
   return (
     <Container>
@@ -18,6 +11,13 @@ export const Spinner = ({ clean }) => {
     </Container>
   );
 };
+
+// const Content = styled.div`
+//   transition: all 250ms ease-in;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const Container = styled.div`
   transition: all 500ms ${(props) => props.theme.cubicbeyzer.heartbeat};
