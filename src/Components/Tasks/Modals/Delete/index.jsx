@@ -143,8 +143,9 @@ const ModalContent = styled.div`
 `;
 
 const Txt = styled.div`
-  display: flex;
-  grid-gap: 3px;
+  display: block;
+  width: 100%;
+  text-align: center;
   flex-direction: row;
 `;
 const TxtEffect = styled.div`
